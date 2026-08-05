@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dianne Garcia | Estetica & Enfermeria</title>
+<meta name="description" content="Servicios profesionales de Estetica y Enfermeria a domicilio. Dianne Garcia - Tu bienestar es nuestra prioridad.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                'dg-gold': '#D4AF37',
+                'dg-dark': '#1A1A1A',
+                'dg-cream': '#FDFBF7',
+                'dg-rose': '#E8D5C4',
+                'nurse-blue': '#1E3A5F',
+                'nurse-light': '#E8F4F8',
+                'nurse-accent': '#00A8CC',
+                'nurse-white': '#F0F8FF',
+            },
+            fontFamily: {
+                'serif': ['Playfair Display', 'serif'],
+                'sans': ['Lato', 'sans-serif'],
+            }
+        }
+    }
+}
+</script>
+<style>
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #FDFBF7; }
+::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
+html { scroll-behavior: smooth; }
+
+.hero-estetica {
+    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-attachment: fixed; background-position: center; background-size: cover;
+}
+.hero-enfermeria {
+    background-image: linear-gradient(rgba(30,58,95,0.7), rgba(30,58,95,0.85)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-attachment: fixed; background-position: center; background-size: cover;
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+.whatsapp-pulse { animation: pulse-green 2s infinite; }
+
+.service-card { transition: all 0.4s ease; }
+.service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.img-zoom-container { overflow: hidden; }
+.img-zoom { transition: transform 0.6s ease; }
+.img-zoom-container:hover .img-zoom { transform: scale(1.1); }
+
+.text-gold-gradient {
+    background: linear-gradient(to right, #D4AF37, #F3E5AB, #D4AF37);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-size: 200% auto; animation: shine 3s linear infinite;
+}
+.text-blue-gradient {
+    background: linear-gradient(to right, #00A8CC, #E8F4F8, #00A8CC);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-size: 200% auto; animation: shine 3s linear infinite;
+}
+@keyframes shine { to { background-position: 200% center; } }
+
+.nav-blur { backdrop-filter: blur(10px); background-color: rgba(253, 251, 247, 0.9); }
+.nav-blur-nurse { backdrop-filter: blur(10px); background-color: rgba(240, 248, 255, 0.9); }
+
+.toggle-switch {
+    position: relative; width: 200px; height: 44px;
+    background: #1A1A1A; border-radius: 22px;
+    cursor: pointer; overflow: hidden; transition: all 0.3s;
+}
+.toggle-switch.nurse-mode { background: #1E3A5F; }
+.toggle-slider {
+    position: absolute; top: 3px; left: 3px;
+    width: 96px; height: 38px; background: #D4AF37;
+    border-radius: 19px; transition: all 0.3s ease;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: bold; color: white;
+    text-transform: uppercase; letter-spacing: 1px;
+}
+.toggle-slider.nurse-mode { transform: translateX(98px); background: #00A8CC; }
+.toggle-labels {
+    position: absolute; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; pointer-events: none;
+}
+.toggle-labels span {
+    font-size: 10px; font-weight: bold; text-transform: uppercase;
+    letter-spacing: 1px; color: rgba(255,255,255,0.6); transition: color 0.3s;
+}
+.toggle-labels span.active { color: white; }
+
+.section-hidden { display: none !important; }
+</style>
+</head>
+<body class="font-sans text-dg-text bg-dg-cream antialiased">
+
+<script>
+const siteData = {
+    whatsappNumber: "584246039273",
+    whatsappMessage: "Hola Dianne, estoy interesad@ en agendar una cita. Vi tu pagina web y me gustaria informacion sobre: ",
+
+    estetica: {
+        services: [
+            { id: "masaje-relajante-normal", title: "Masaje Relajante", subtitle: "Anti-stress & Bienestar", description: "Libera tensiones acumuladas con movimientos suaves y aromaterapia. Ideal para combatir el estres, mejorar la circulacion y recuperar la energia perdida.", duration: "60 min", image: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", icon: "fa-spa", category: "masajes" },
+            { id: "masaje-piedras-volcanicas", title: "Masaje con Piedras Volcanicas", subtitle: "Terapia de Calor Natural", description: "Masaje terapeutico que utiliza piedras basalticas calientes para relajar musculos profundos, aliviar dolores cronicos y mejorar el flujo energetico del cuerpo.", duration: "75 min", image: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", icon: "fa-fire", category: "masajes" },
+            { id: "masaje-reductor", title: "Masaje Reductor", subtitle: "Perdida de Grasa Localizada", description: "Tecnica intensa para moldear la figura, reducir medidas y eliminar toxinas. Combinado con productos termoactivos para resultados visibles.", duration: "45 min", image: "https://kimi-web-img.moonshot.cn/img/raintreespa.com/5214d91e94846896f9061e6a7078cc0417872c63.jpg", icon: "fa-fire-flame-curved", category: "masajes" },
+            { id: "masaje-deportivo", title: "Masaje Deportivo con Quiropraxia", subtitle: "Para Deportistas & Lesiones", description: "Masaje de alta intensidad combinado con ajustes quiropracticos. Ideal para deportistas, recuperacion muscular, lesiones y mejora del rendimiento fisico.", duration: "60 min", image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", icon: "fa-person-running", category: "masajes" },
+            { id: "masaje-descarga", title: "Masaje de Descargas", subtitle: "Alivio de Tensiones Musculares", description: "Masaje enfocado en liberar contracturas musculares profundas. Perfecto despues de largas jornadas de trabajo o actividad fisica intensa.", duration: "50 min", image: "https://kimi-web-img.moonshot.cn/img/denversportsmassage.com/67a14545626ffa2d0d36df17bf3ac8878b90575b.jpg", icon: "fa-hand-holding-heart", category: "masajes" },
+            { id: "limpieza-facial-profunda", title: "Limpieza Facial Profunda", subtitle: "Piel Renovada & Luminosa", description: "Extraccion completa de impurezas, puntos negros y celulas muertas. Incluye vapor, exfoliacion, extraccion manual, alta frecuencia y mascarilla hidratante.", duration: "90 min", image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", icon: "fa-face-smile-beam", category: "faciales" },
+            { id: "limpieza-facial-sencilla", title: "Limpieza Facial Sencilla", subtitle: "Mantenimiento Rapido", description: "Limpieza facial express ideal para mantenimiento semanal. Incluye desmaquillado, limpieza suave, exfoliacion ligera e hidratacion.", duration: "45 min", image: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", icon: "fa-face-grin-stars", category: "faciales" },
+            { id: "control-acne", title: "Control de Acne", subtitle: "Piel Libre de Imperfecciones", description: "Tratamiento especializado para piel acneica. Incluye limpieza profunda, extraccion de comedones, aplicacion de productos secantes y mascarilla calmante.", duration: "75 min", image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", icon: "fa-shield-virus", category: "faciales" },
+            { id: "prp-facial", title: "PRP Facial", subtitle: "Plasma Rico en Plaquetas", description: "Tratamiento regenerativo que utiliza tu propio plasma para estimular colageno, mejorar textura, luminosidad y reducir lineas de expresion. Resultados naturales y duraderos.", duration: "60 min", image: "https://kimi-web-img.moonshot.cn/img/www.liquivida.com/7e1ce2768ecae1244335b991baca4a27897d3010.webp", icon: "fa-syringe", category: "prp" },
+            { id: "prp-capilar", title: "PRP Capilar", subtitle: "Plasma Rico en Plaquetas", description: "Tratamiento capilar con plasma para fortalecer foliculos, reducir caida del cabello, estimular crecimiento y mejorar la salud del cuero cabelludo.", duration: "45 min", image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", icon: "fa-user-doctor", category: "prp" },
+            { id: "eliminacion-verrugas", title: "Eliminacion de Verrugas y Acrocordones", subtitle: "Piel Lisa & Sin Imperfecciones", description: "Eliminacion segura y efectiva de verrugas y acrocordones mediante tecnicas especializadas con plasma PEM. Procedimiento rapido con minima molestia y excelentes resultados esteticos.", duration: "30 min", image: "https://kimi-web-img.moonshot.cn/img/eternia.ec/f78a03f12ae291eb40b42854ac5f6108fe11ad9d.jpg", icon: "fa-hand-sparkles", category: "eliminaciones" },
+            { id: "eliminacion-cadillos", title: "Eliminacion de Cadillos", subtitle: "Pies Suaves & Saludables", description: "Cauterizacion de cadillos en diversas partes del cuerpo. Procedimiento seguro y efectivo para eliminar durezas y callosidades con resultados inmediatos.", duration: "45 min", image: "https://kimi-web-img.moonshot.cn/img/c8.alamy.com/90795c7798ffcd20c29e22857b7e33c156600667.jpg", icon: "fa-shoe-prints", category: "eliminaciones" }
+        ],
+        products: [
+            { name: "Serum Vitamina C", desc: "Iluminador y antioxidante para todo tipo de piel.", image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+            { name: "Protector Solar Eucerin SPF 50+", desc: "Proteccion solar avanzada con filtros UVA/UVB. Ideal para todo tipo de piel, incluida la sensible y post-tratamiento.", image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+            { name: "Aceite Esencial de Lavanda", desc: "Perfecto para masajes relajantes en casa.", image: "https://images.unsplash.com/photo-1608571423902-eed4a5ed8108?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" }
+        ],
+        tips: [
+            { title: "Hidratate", desc: "Bebe al menos 2 litros de agua al dia para mantener tu piel radiante y favorecer la eliminacion de toxinas.", icon: "fa-glass-water" },
+            { title: "Proteccion Solar", desc: "Usa protector solar todos los dias, incluso si esta nublado. Es el mejor anti-envejecimiento.", icon: "fa-sun" },
+            { title: "Limpieza Nocturna", desc: "Nunca te acuestes sin limpiar tu rostro. Elimina maquillaje, polvo y residuos acumulados.", icon: "fa-moon" },
+            { title: "Alimentacion Balanceada", desc: "Consume frutas, verduras y alimentos ricos en antioxidantes y omega-3 para una piel saludable.", icon: "fa-carrot" },
+            { title: "Descansa Bien", desc: "Duerme entre 7-8 horas. Durante el sueno tu piel se regenera y repara naturalmente.", icon: "fa-bed" },
+            { title: "No Te Toques la Cara", desc: "Evita tocarte el rostro con las manos sucias para prevenir brotes de acne e infecciones.", icon: "fa-hand" }
+        ]
+    },
+
+    enfermeria: {
+        services: [
+            { id: "inyeccion-intramuscular", title: "Inyeccion Intramuscular", subtitle: "Administracion de Medicamentos", description: "Aplicacion profesional de medicamentos via intramuscular. Puedes venir al consultorio o solicitar atencion a domicilio segun tu preferencia. Incluye valoracion previa y seguimiento post-inyeccion.", duration: "15 min", image: "https://kimi-web-img.moonshot.cn/img/simplenursing.com/850f662e1ecc481765de2bf983763d6ec7a4addc.jpg", icon: "fa-syringe", category: "procedimientos" },
+            { id: "cateterizacion", title: "Cateterizacion de Via Periferica", subtitle: "Acceso Venoso Profesional", description: "Colocacion de cateter periferico para administracion de fluidos, medicamentos o tratamientos intravenosos. Disponible en consultorio o a domicilio. Procedimiento esteril y seguro.", duration: "20 min", image: "https://kimi-web-img.moonshot.cn/img/static.vecteezy.com/2eeee40a7375e930f8f42ca4f602737bcef1ba47.jpg", icon: "fa-heart-pulse", category: "procedimientos" },
+            { id: "tratamiento-intravenoso", title: "Tratamiento Intravenoso", subtitle: "Terapia Endovenosa a Domicilio", description: "Administracion de tratamientos intravenosos. Elige entre atencion en consultorio o a domicilio segun tu comodidad. Ideal para hidratacion, vitaminas, antibioticos y otros medicamentos.", duration: "30-60 min", image: "https://kimi-web-img.moonshot.cn/img/assets.yourpractice.online/d3e7472e5afab5fc81c738c330dbfd2ccb25ae26.jpg", icon: "fa-droplet", category: "procedimientos" },
+            { id: "coctel-multivitaminico", title: "Coctel Multivitaminico", subtitle: "Incluye Todo el Material", description: "Infusion intravenosa de vitaminas y minerales esenciales para fortalecer el sistema inmunologico, aumentar la energia y mejorar el bienestar general. Material incluido. Atencion en consultorio o a domicilio.", duration: "45 min", image: "https://kimi-web-img.moonshot.cn/img/ignitewellnessva.com/7f30edef7264fe87f3910e540252d6bda9f9166b.jpg", icon: "fa-capsules", category: "procedimientos" },
+            { id: "cura-heridas", title: "Cura de Heridas", subtitle: "Cuidado y Cicatrizacion", description: "Limpieza, desinfeccion y curacion profesional de heridas post-quirurgicas, ulceras, quemaduras leves y otras lesiones cutaneas. Incluye cambio de apositos. Atencion en consultorio o a domicilio segun tu preferencia.", duration: "30 min", image: "https://kimi-web-img.moonshot.cn/img/media.healthecareers.com/b0aa50e27aa2a6c95aafdd82a8db861a4d9b16d2.jpg", icon: "fa-bandage", category: "cuidados" },
+            { id: "control-tension", title: "Control de Tension Arterial", subtitle: "Monitoreo por 7 Dias", description: "Seguimiento diario de tu presion arterial durante 7 dias consecutivos. Puedes asistir al consultorio o solicitar visitas a domicilio. Incluye registro de valores, interpretacion de resultados y recomendaciones personalizadas.", duration: "7 dias", image: "https://kimi-web-img.moonshot.cn/img/elements-resized.envatousercontent.com/831fb4ca4482b0b11c9caec9b091de656988f0b4.jpg", icon: "fa-stethoscope", category: "monitoreo" },
+            { id: "cuidado-24h", title: "Cuidado 24 Horas en Casa", subtitle: "Atencion Integral Continua", description: "Servicio completo de enfermeria las 24 horas. Incluye administracion de medicamentos, curas, monitoreo de signos vitales y acompanamiento. Elige entre atencion en consultorio o a domicilio segun tu preferencia.", duration: "24 horas", image: "https://kimi-web-img.moonshot.cn/img/www.elderly-homecare.com/d07761f1215479fe00bb6e3fb2061469fbb417cc.jpg", icon: "fa-house-medical", category: "guardias" }
+        ],
+        products: [
+            { name: "Termometro Digital", desc: "Medicion precisa de temperatura corporal para monitoreo diario.", image: "https://kimi-web-img.moonshot.cn/img/ihealthlabs.com/d1a6a9ed041417b2954ad5430184eb32c7724361.png" },
+            { name: "Tensiometro Digital", desc: "Control de presion arterial desde casa con resultados precisos.", image: "https://kimi-web-img.moonshot.cn/img/imrorwxhooimjp5p-static.micyjz.com/e9b2f7ed80a3d4364420fe2e3d4770ba9b785af9.jpg" },
+            { name: "Oximetro de Pulso", desc: "Medicion de saturacion de oxigeno y frecuencia cardiaca.", image: "https://kimi-web-img.moonshot.cn/img/bellevuehealthcare.com/130e0e8b7d188f2f13cdac4d0d4f74c089e2f2a3.jpg" }
+        ],
+        tips: [
+            { title: "Toma tu Medicacion", desc: "Toma tus medicamentos a la hora indicada. Usa un organizador de pastillas para no olvidar ninguna dosis.", icon: "fa-pills" },
+            { title: "Controla tu Presion", desc: "Mide tu presion arterial en el mismo horario todos los dias y lleva un registro de los valores.", icon: "fa-heart-pulse" },
+            { title: "Hidratacion", desc: "Bebe suficiente agua, especialmente si recibes tratamientos intravenosos o tomas medicamentos.", icon: "fa-glass-water" },
+            { title: "Reposo", desc: "Descansa adecuadamente para favorecer la recuperacion. El sueno es fundamental para la sanacion.", icon: "fa-bed" },
+            { title: "Alimentacion Saludable", desc: "Sigue una dieta balanceada rica en nutrientes para fortalecer tu sistema inmunologico.", icon: "fa-apple-whole" },
+            { title: "Comunicacion", desc: "Informa a tu enfermera sobre cualquier cambio en tu estado de salud o efectos secundarios.", icon: "fa-comments" }
+        ]
+    }
+};
+
+let currentMode = 'estetica';
+</script>
+
+<!-- NAVIGATION -->
+<nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center">
+<a href="#" class="flex items-center gap-2 group">
+<img id="nav-logo" src="1777297766400.png" alt="Dianne Garcia Logo" class="w-10 h-10 rounded-full object-cover group-hover:scale-110 transition-transform border-2 border-dg-gold">
+<div class="flex flex-col">
+<span id="nav-title" class="font-serif text-xl font-bold text-dg-dark leading-none">Dianne Garcia</span>
+<span id="nav-subtitle" class="text-xs text-dg-gold tracking-widest uppercase">Estetica & Belleza</span>
+</div>
+</a>
+
+<!-- TOGGLE SWITCH -->
+<div class="hidden md:block">
+<div class="toggle-switch" id="mode-toggle" onclick="toggleMode()">
+<div class="toggle-slider" id="toggle-slider">Estetica</div>
+<div class="toggle-labels">
+<span class="active" id="label-estetica">Estetica</span>
+<span id="label-enfermeria">Enfermeria</span>
+</div>
+</div>
+</div>
+
+<div class="hidden md:flex items-center space-x-8">
+<a href="#inicio" class="nav-link text-dg-dark hover:text-dg-gold transition-colors font-medium text-sm uppercase tracking-wider">Inicio</a>
+<a href="#servicios" class="nav-link text-dg-dark hover:text-dg-gold transition-colors font-medium text-sm uppercase tracking-wider">Servicios</a>
+<a href="#productos" class="nav-link text-dg-dark hover:text-dg-gold transition-colors font-medium text-sm uppercase tracking-wider">Productos</a>
+<a href="#contacto" id="nav-cta" class="bg-dg-gold text-white px-6 py-2 rounded-full hover:bg-dg-dark transition-all transform hover:scale-105 text-sm font-bold uppercase tracking-wider shadow-lg">Reservar Cita</a>
+</div>
+<button id="mobile-menu-btn" class="md:hidden text-dg-dark text-2xl focus:outline-none">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+</div>
+<div id="mobile-menu" class="hidden md:hidden bg-white shadow-xl absolute w-full left-0 top-full">
+<div class="flex flex-col px-6 py-4 space-y-4">
+<div class="flex justify-center mb-4">
+<div class="toggle-switch" id="mobile-mode-toggle" onclick="toggleMode()">
+<div class="toggle-slider" id="mobile-toggle-slider">Estetica</div>
+<div class="toggle-labels">
+<span class="active" id="mobile-label-estetica">Estetica</span>
+<span id="mobile-label-enfermeria">Enfermeria</span>
+</div>
+</div>
+</div>
+<a href="#inicio" class="text-dg-dark hover:text-dg-gold font-medium">Inicio</a>
+<a href="#servicios" class="text-dg-dark hover:text-dg-gold font-medium">Servicios</a>
+<a href="#productos" class="text-dg-dark hover:text-dg-gold font-medium">Productos</a>
+<a href="#contacto" class="bg-dg-gold text-white px-6 py-3 rounded-full text-center font-bold">Reservar Cita</a>
+</div>
+</div>
+</nav>
+
+<!-- ==================== ESTETICA ONLY ==================== -->
+<div id="estetica-content">
+
+<!-- HERO -->
+<section id="inicio" class="hero-estetica min-h-screen flex items-center justify-center relative">
+<div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-dg-cream"></div>
+<div class="relative z-10 text-center px-4 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+<div class="mb-6 inline-block">
+<span class="bg-white/20 backdrop-blur-sm text-white px-4 py-1 rounded-full text-sm tracking-widest uppercase border border-white/30">Bienestar & Belleza</span>
+</div>
+<h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-white font-bold mb-6 leading-tight">
+Descubre tu <br><span class="text-gold-gradient italic">Mejor Version</span>
+</h1>
+<p class="text-white/90 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+En <strong>Estetica y Belleza Dianne Garcia</strong> transformamos tu bienestar en una experiencia de lujo. 
+Masajes relajantes, limpiezas faciales profundas, PRP y tratamientos especializados diseñados para ti.
+</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#servicios" class="bg-dg-gold text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-dg-gold transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-2">
+<i class="fas fa-spa"></i> Ver Servicios
+</a>
+<a href="#contacto" class="bg-white/10 backdrop-blur-md border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-dg-dark transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+<i class="fab fa-whatsapp"></i> Agendar Ahora
+</a>
+</div>
+</div>
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+<a href="#servicios" class="text-white/70 hover:text-white text-2xl"><i class="fas fa-chevron-down"></i></a>
+</div>
+</section>
+
+<!-- STATS -->
+<section class="bg-white py-10 shadow-sm relative z-20 -mt-2">
+<div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+<div data-aos="fade-up" data-aos-delay="0">
+<div class="text-3xl md:text-4xl font-serif font-bold text-dg-gold mb-1">+500</div>
+<div class="text-sm text-gray-500 uppercase tracking-wider">Clientes Felices</div>
+</div>
+<div data-aos="fade-up" data-aos-delay="100">
+<div class="text-3xl md:text-4xl font-serif font-bold text-dg-gold mb-1">100%</div>
+<div class="text-sm text-gray-500 uppercase tracking-wider">Productos Naturales</div>
+</div>
+<div data-aos="fade-up" data-aos-delay="200">
+<div class="text-3xl md:text-4xl font-serif font-bold text-dg-gold mb-1">5+</div>
+<div class="text-sm text-gray-500 uppercase tracking-wider">Anos de Experiencia</div>
+</div>
+<div data-aos="fade-up" data-aos-delay="300">
+<div class="text-3xl md:text-4xl font-serif font-bold text-dg-gold mb-1">4.9</div>
+<div class="text-sm text-gray-500 uppercase tracking-wider">Calificacion Promedio</div>
+</div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="py-20 bg-dg-cream">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div data-aos="fade-right">
+<div class="relative">
+<div class="absolute -top-4 -left-4 w-24 h-24 bg-dg-gold/20 rounded-full"></div>
+<div class="absolute -bottom-4 -right-4 w-32 h-32 bg-dg-rose/50 rounded-full"></div>
+<img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Estetica Dianne Garcia" class="relative z-10 rounded-2xl shadow-2xl w-full object-cover h-[500px]">
+<div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-xl z-20 flex items-center gap-3">
+<div class="bg-dg-gold/10 p-3 rounded-full text-dg-gold"><i class="fas fa-award text-xl"></i></div>
+<div>
+<div class="font-bold text-dg-dark">Certificada</div>
+<div class="text-xs text-gray-500">Profesional en Estetica</div>
+</div>
+</div>
+</div>
+</div>
+<div data-aos="fade-left" class="md:pl-10">
+<span class="text-dg-gold font-bold tracking-widest uppercase text-sm mb-2 block">Sobre Nosotros</span>
+<h2 class="font-serif text-4xl md:text-5xl font-bold text-dg-dark mb-6">Tu Belleza, <br><span class="text-dg-gold italic">Nuestra Pasion</span></h2>
+<p class="text-gray-600 mb-6 leading-relaxed">
+En <strong>Estetica y Belleza Dianne Garcia</strong> creemos que cada persona merece sentirse bella y relajada. 
+Nuestro espacio esta disenado para ofrecerte una experiencia unica de bienestar, combinando tecnicas profesionales 
+con productos de alta calidad.
+</p>
+<p class="text-gray-600 mb-8 leading-relaxed">
+Desde masajes relajantes que alivian el estres hasta limpiezas faciales profundas que renuevan tu piel, 
+tratamientos PRP para rejuvenecimiento y eliminacion de imperfecciones — cada tratamiento es personalizado 
+para satisfacer tus necesidades especificas.
+</p>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="flex items-center gap-3"><i class="fas fa-check-circle text-dg-gold"></i><span class="text-sm font-medium">Ambiente Privado</span></div>
+<div class="flex items-center gap-3"><i class="fas fa-check-circle text-dg-gold"></i><span class="text-sm font-medium">Productos Premium</span></div>
+<div class="flex items-center gap-3"><i class="fas fa-check-circle text-dg-gold"></i><span class="text-sm font-medium">Tecnicas Certificadas</span></div>
+<div class="flex items-center gap-3"><i class="fas fa-check-circle text-dg-gold"></i><span class="text-sm font-medium">Resultados Garantizados</span></div>
+</div>
+<a href="#contacto" class="inline-flex items-center gap-2 text-dg-gold font-bold hover:gap-4 transition-all">Reserva tu experiencia <i class="fas fa-arrow-right"></i></a>
+</div>
+</div>
+</div>
+</section>
+
+</div><!-- END ESTETICA ONLY -->
+
+<!-- ==================== ENFERMERIA ONLY ==================== -->
+<div id="enfermeria-content" class="section-hidden">
+
+<!-- HERO -->
+<section id="inicio-enf" class="hero-enfermeria min-h-screen flex items-center justify-center relative">
+<div class="absolute inset-0 bg-gradient-to-b from-nurse-blue/70 via-nurse-blue/50 to-nurse-light"></div>
+<div class="relative z-10 text-center px-4 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+<div class="mb-6 inline-block">
+<span class="bg-white/20 backdrop-blur-sm text-white px-4 py-1 rounded-full text-sm tracking-widest uppercase border border-white/30">Consultorio & Domicilio</span>
+</div>
+<h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-white font-bold mb-6 leading-tight">
+Cuidamos de <br><span class="text-blue-gradient italic">Tu Salud</span>
+</h1>
+<p class="text-white/90 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+En <strong>Enfermeria Dianne Garcia</strong> ofrecemos servicios profesionales de enfermeria. 
+Inyecciones, curas, tratamientos intravenosos y cuidados especializados. Atencion en consultorio o a domicilio, tu eliges lo que prefieres.
+</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="#servicios" class="bg-nurse-accent text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-nurse-blue transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-2">
+<i class="fas fa-user-nurse"></i> Ver Servicios
+</a>
+<a href="#contacto" class="bg-white/10 backdrop-blur-md border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-nurse-blue transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+<i class="fab fa-whatsapp"></i> Agendar Ahora
+</a>
+</div>
+</div>
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+<a href="#servicios" class="text-white/70 hover:text-white text-2xl"><i class="fas fa-chevron-down"></i></a>
+</div>
+</section>
+
+<!-- STATS -->
+<section class="bg-nurse-white py-10 shadow-sm relative z-20 -mt-2">
+<div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+<div data-aos="fade-up" data-aos-delay="0">
+<div class="text-3xl md:text-4xl font-serif font-bold text-nurse-accent mb-1">+300</div>
+<div class="text-sm text-gray-500 uppercase tracking-wider">Pacientes Atendidos</div>
+</div>
+<div data-aos="fade-up" data-aos-delay="100">
+<div class="text-3xl md:text-4xl font-serif font-bold text-nurse-accent mb-1">100%</div>
+<div class="text-sm text-gray-500 uppercase tracking-wider">Atencion Domiciliaria</div>
+</div>
+<div data-aos="fade-up" data-aos-delay="200">
+<div class="text-3xl md:text-4xl font-serif font-bold text-nurse-accent mb-1">24/7</div>
+<div class="text-sm text-gray-500 uppercase tracking-wider">Disponibilidad</div>
+</div>
+<div data-aos="fade-up" data-aos-delay="300">
+<div class="text-3xl md:text-4xl font-serif font-bold text-nurse-accent mb-1">5+</div>
+<div class="text-sm text-gray-500 uppercase tracking-wider">Anos de Experiencia</div>
+</div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="py-20 bg-nurse-light">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div data-aos="fade-right">
+<div class="relative">
+<div class="absolute -top-4 -left-4 w-24 h-24 bg-nurse-accent/20 rounded-full"></div>
+<div class="absolute -bottom-4 -right-4 w-32 h-32 bg-nurse-blue/20 rounded-full"></div>
+<img src="https://kimi-web-img.moonshot.cn/img/thumbs.dreamstime.com/af2aac8160d85c9d7389d4e950a86515deb39d3a.jpg" alt="Enfermeria Dianne Garcia" class="relative z-10 rounded-2xl shadow-2xl w-full object-cover h-[500px]">
+<div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-xl z-20 flex items-center gap-3">
+<div class="bg-nurse-accent/10 p-3 rounded-full text-nurse-accent"><i class="fas fa-user-nurse text-xl"></i></div>
+<div>
+<div class="font-bold text-nurse-blue">Licenciada</div>
+<div class="text-xs text-gray-500">Profesional en Enfermeria</div>
+</div>
+</div>
+</div>
+</div>
+<div data-aos="fade-left" class="md:pl-10">
+<span class="text-nurse-accent font-bold tracking-widest uppercase text-sm mb-2 block">Sobre Nosotros</span>
+<h2 class="font-serif text-4xl md:text-5xl font-bold text-nurse-blue mb-6">Tu Salud, <br><span class="text-nurse-accent italic">Nuestra Prioridad</span></h2>
+<p class="text-gray-600 mb-6 leading-relaxed">
+En <strong>Enfermeria Dianne Garcia</strong> brindamos atencion profesional y humanizada. 
+Contamos con amplia experiencia en cuidados de enfermeria, procedimientos especializados y atencion tanto en consultorio como a domicilio. Tu eliges donde recibir tu cuidado.
+</p>
+<p class="text-gray-600 mb-8 leading-relaxed">
+Desde inyecciones intramusculares hasta cuidados las 24 horas, cada servicio es realizado con los mas altos 
+estandares de calidad, seguridad y profesionalismo. Puedes venir al consultorio o solicitar atencion a domicilio. Tu bienestar es nuestra mision.
+</p>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="flex items-center gap-3"><i class="fas fa-check-circle text-nurse-accent"></i><span class="text-sm font-medium">Atencion Domiciliaria</span></div>
+<div class="flex items-center gap-3"><i class="fas fa-check-circle text-nurse-accent"></i><span class="text-sm font-medium">Material Esterilizado</span></div>
+<div class="flex items-center gap-3"><i class="fas fa-check-circle text-nurse-accent"></i><span class="text-sm font-medium">Profesional Certificada</span></div>
+<div class="flex items-center gap-3"><i class="fas fa-check-circle text-nurse-accent"></i><span class="text-sm font-medium">Disponibilidad 24/7</span></div>
+</div>
+<a href="#contacto" class="inline-flex items-center gap-2 text-nurse-accent font-bold hover:gap-4 transition-all">Agenda tu servicio <i class="fas fa-arrow-right"></i></a>
+</div>
+</div>
+</div>
+</section>
+
+</div><!-- END ENFERMERIA ONLY -->
+
+<!-- ==================== SHARED SERVICES SECTION ==================== -->
+<section id="servicios" class="py-24 bg-white relative overflow-hidden">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="text-center mb-12" data-aos="fade-up">
+<span id="services-label" class="font-bold tracking-widest uppercase text-sm mb-2 block text-dg-gold">Nuestros Tratamientos</span>
+<h2 id="services-title" class="font-serif text-4xl md:text-5xl font-bold text-dg-dark mb-4">Servicios de <span class="text-dg-gold italic">Excelencia</span></h2>
+<p class="text-gray-500 max-w-2xl mx-auto">Selecciona cualquier servicio para agendar tu cita directamente por WhatsApp.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-3 mb-12" data-aos="fade-up" id="category-filters"></div>
+<div id="services-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+</div>
+</section>
+
+<!-- ==================== SHARED HOW IT WORKS ==================== -->
+<section id="como-funciona" class="py-20 bg-dg-dark text-white">
+<div class="max-w-7xl mx-auto px-4">
+<div class="text-center mb-16" data-aos="fade-up">
+<span id="how-label" class="text-dg-gold font-bold tracking-widest uppercase text-sm mb-2 block">Experiencia</span>
+<h2 id="how-title" class="font-serif text-4xl md:text-5xl font-bold mb-4">Como Funciona?</h2>
+<p id="how-desc" class="text-gray-400 max-w-2xl mx-auto">Tu bienestar en 3 simples pasos.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8 relative">
+<div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 bg-dg-gold/30" id="how-line"></div>
+<div class="text-center relative" data-aos="fade-up" data-aos-delay="0">
+<div id="how-icon-1" class="w-24 h-24 bg-dg-gold rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg shadow-dg-gold/20 relative z-10"><i class="fas fa-mouse-pointer text-white"></i></div>
+<h3 id="how-h3-1" class="font-serif text-2xl font-bold mb-3">1. Elige tu Servicio</h3>
+<p id="how-p-1" class="text-gray-400">Explora nuestro menu de tratamientos y selecciona el que mas se adapte a tus necesidades.</p>
+</div>
+<div class="text-center relative" data-aos="fade-up" data-aos-delay="200">
+<div id="how-icon-2" class="w-24 h-24 bg-dg-gold rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg shadow-dg-gold/20 relative z-10"><i class="fab fa-whatsapp text-white"></i></div>
+<h3 id="how-h3-2" class="font-serif text-2xl font-bold mb-3">2. Agenda por WhatsApp</h3>
+<p id="how-p-2" class="text-gray-400">Al dar clic, te redirigimos directamente al chat de Dianne para confirmar fecha y hora.</p>
+</div>
+<div class="text-center relative" data-aos="fade-up" data-aos-delay="400">
+<div id="how-icon-3" class="w-24 h-24 bg-dg-gold rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg shadow-dg-gold/20 relative z-10"><i class="fas fa-heart text-white"></i></div>
+<h3 id="how-h3-3" class="font-serif text-2xl font-bold mb-3">3. Disfruta & Relajate</h3>
+<p id="how-p-3" class="text-gray-400">Ven a tu cita y dejate consentir. Tu bienestar es nuestra prioridad.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ==================== SHARED PRODUCTS SECTION ==================== -->
+<section id="productos" class="py-24 bg-dg-cream">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16" data-aos="fade-up">
+<span id="products-label" class="text-dg-gold font-bold tracking-widest uppercase text-sm mb-2 block">Cuidado en Casa</span>
+<h2 id="products-title" class="font-serif text-4xl md:text-5xl font-bold text-dg-dark mb-4">Productos <span class="text-dg-gold italic">Recomendados</span></h2>
+<p id="products-desc" class="text-gray-500 max-w-2xl mx-auto">Manten los resultados de tu tratamiento con nuestros productos seleccionados.</p>
+</div>
+<div id="products-grid" class="grid md:grid-cols-3 gap-8"></div>
+</div>
+</section>
+
+<!-- ==================== SHARED TIPS SECTION ==================== -->
+<section id="tips" class="py-20 bg-dg-rose/20">
+<div class="max-w-7xl mx-auto px-4">
+<div class="text-center mb-16" data-aos="fade-up">
+<span id="tips-label" class="text-dg-gold font-bold tracking-widest uppercase text-sm mb-2 block">Consejos de Experta</span>
+<h2 id="tips-title" class="font-serif text-4xl md:text-5xl font-bold text-dg-dark mb-4">Recomendaciones <span class="text-dg-gold italic">Dianne</span></h2>
+</div>
+<div id="tips-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</div>
+</section>
+
+<!-- ==================== SHARED TESTIMONIALS ==================== -->
+<section id="testimonios" class="py-24 bg-dg-dark text-white relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+<div class="max-w-5xl mx-auto px-4 relative z-10">
+<div class="text-center mb-12" data-aos="fade-up">
+<span id="test-label" class="text-dg-gold font-bold tracking-widest uppercase text-sm mb-2 block">Testimonios</span>
+<h2 id="test-title" class="font-serif text-4xl md:text-5xl font-bold mb-4">Lo que Dicen <span class="text-dg-gold italic">Nuestros Clientes</span></h2>
+</div>
+<div id="testimonials-grid" class="grid md:grid-cols-3 gap-8"></div>
+</div>
+</section>
+
+<!-- ==================== SHARED CONTACT ==================== -->
+<section id="contacto" class="py-24 bg-dg-cream relative">
+<div class="max-w-4xl mx-auto px-4 text-center">
+<div data-aos="zoom-in">
+<div id="contact-icon" class="w-20 h-20 bg-dg-gold rounded-full flex items-center justify-center mx-auto mb-6 text-4xl text-white shadow-xl shadow-dg-gold/30">
+<i class="fab fa-whatsapp"></i>
+</div>
+<h2 id="contact-title" class="font-serif text-4xl md:text-6xl font-bold text-dg-dark mb-6">Lista para <span class="text-dg-gold italic">Brillar?</span></h2>
+<p id="contact-desc" class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+Agenda tu cita ahora mismo. Estoy aqui para ayudarte a lucir y sentirte mejor. 
+Escribeme por WhatsApp y conversemos sobre lo que necesitas!
+</p>
+<a id="main-cta-btn" href="#" target="_blank" class="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-[#128C7E] transition-all transform hover:scale-105 shadow-2xl shadow-green-500/30">
+<i class="fab fa-whatsapp text-2xl"></i><span id="cta-text">Chatear con Dianne</span>
+</a>
+<p class="mt-6 text-sm text-gray-400">Respuesta garantizada en menos de 30 minutos</p>
+</div>
+</div>
+</section>
+
+<!-- ==================== SHARED FOOTER ==================== -->
+<footer id="footer" class="bg-dg-dark text-white py-12 border-t border-white/10">
+<div class="max-w-7xl mx-auto px-4">
+<div class="grid md:grid-cols-4 gap-8 mb-8">
+<div class="md:col-span-2">
+<div class="flex items-center gap-2 mb-4">
+<img id="footer-logo" src="1777297766400.png" alt="Dianne Garcia Logo" class="w-8 h-8 rounded-full object-cover border border-dg-gold">
+<span id="footer-title" class="font-serif text-xl font-bold">Dianne Garcia</span>
+</div>
+<p id="footer-desc" class="text-gray-400 text-sm leading-relaxed max-w-sm">Centro de estetica y belleza dedicado a realzar tu belleza natural a traves de tratamientos profesionales y personalizados.</p>
+</div>
+<div>
+<h4 id="footer-services-title" class="font-bold text-dg-gold mb-4 uppercase text-sm tracking-wider">Servicios</h4>
+<ul id="footer-services-list" class="space-y-2 text-sm text-gray-400">
+<!-- Dynamic content -->
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-dg-gold mb-4 uppercase text-sm tracking-wider">Contacto</h4>
+<ul class="space-y-2 text-sm text-gray-400">
+<li class="flex items-center gap-2"><i class="fab fa-whatsapp text-dg-gold"></i> <span>WhatsApp</span></li>
+<li class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-dg-gold"></i> <span>Consulta Privada</span></li>
+<li class="flex items-center gap-2"><i class="fas fa-clock text-dg-gold"></i> <span>Lun - Sab: 9am - 7pm</span></li>
+</ul>
+<div class="flex gap-4 mt-4">
+<a href="#" class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-dg-gold transition-colors"><i class="fab fa-instagram"></i></a>
+<a href="#" class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-dg-gold transition-colors"><i class="fab fa-facebook-f"></i></a>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 pt-8 text-center text-xs text-gray-500">
+<p id="footer-copy"> Estetica y Belleza Dianne Garcia. Todos los derechos reservados.</p>
+<p class="mt-2">Disenado con amor para tu bienestar.</p>
+</div>
+</div>
+</footer>
+
+<a id="floating-whatsapp" href="#" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-2xl whatsapp-pulse hover:scale-110 transition-transform">
+<i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ once: true, offset: 100, duration: 800 });
+
+// ============ MODE TOGGLE ============
+function toggleMode() {
+    currentMode = currentMode === 'estetica' ? 'enfermeria' : 'estetica';
+    updateUI();
+}
+
+function updateUI() {
+    const isEstetica = currentMode === 'estetica';
+    const data = isEstetica ? siteData.estetica : siteData.enfermeria;
+
+    // Toggle switches
+    document.querySelectorAll('.toggle-switch').forEach(el => el.classList.toggle('nurse-mode', !isEstetica));
+    document.querySelectorAll('.toggle-slider').forEach(el => {
+        el.classList.toggle('nurse-mode', !isEstetica);
+        el.textContent = isEstetica ? 'Estetica' : 'Enfermeria';
+    });
+    document.querySelectorAll('#label-estetica, #mobile-label-estetica').forEach(el => el.classList.toggle('active', isEstetica));
+    document.querySelectorAll('#label-enfermeria, #mobile-label-enfermeria').forEach(el => el.classList.toggle('active', !isEstetica));
+
+    // Show/hide hero/about sections
+    document.getElementById('estetica-content').classList.toggle('section-hidden', !isEstetica);
+    document.getElementById('enfermeria-content').classList.toggle('section-hidden', isEstetica);
+
+    // Update navbar
+    const navLogo = document.getElementById('nav-logo');
+    const navSubtitle = document.getElementById('nav-subtitle');
+    const navCta = document.getElementById('nav-cta');
+
+    if (isEstetica) {
+        navLogo.className = 'w-10 h-10 rounded-full object-cover group-hover:scale-110 transition-transform border-2 border-dg-gold';
+        navSubtitle.className = 'text-xs text-dg-gold tracking-widest uppercase';
+        navSubtitle.textContent = 'Estetica & Belleza';
+        navCta.className = 'bg-dg-gold text-white px-6 py-2 rounded-full hover:bg-dg-dark transition-all transform hover:scale-105 text-sm font-bold uppercase tracking-wider shadow-lg';
+    } else {
+        navLogo.className = 'w-10 h-10 rounded-full object-cover group-hover:scale-110 transition-transform border-2 border-nurse-accent';
+        navSubtitle.className = 'text-xs text-nurse-accent tracking-widest uppercase';
+        navSubtitle.textContent = 'Enfermeria Profesional';
+        navCta.className = 'bg-nurse-accent text-white px-6 py-2 rounded-full hover:bg-nurse-blue transition-all transform hover:scale-105 text-sm font-bold uppercase tracking-wider shadow-lg';
+    }
+
+    // Update services section header
+    document.getElementById('services-label').textContent = isEstetica ? 'Nuestros Tratamientos' : 'Nuestros Servicios';
+    document.getElementById('services-label').className = 'font-bold tracking-widest uppercase text-sm mb-2 block ' + (isEstetica ? 'text-dg-gold' : 'text-nurse-accent');
+    document.getElementById('services-title').innerHTML = isEstetica ? 'Servicios de <span class="text-dg-gold italic">Excelencia</span>' : 'Cuidado de <span class="text-nurse-accent italic">Calidad</span>';
+    document.getElementById('services-title').className = 'font-serif text-4xl md:text-5xl font-bold mb-4 ' + (isEstetica ? 'text-dg-dark' : 'text-nurse-blue');
+
+    // Update How It Works section
+    document.getElementById('how-label').textContent = isEstetica ? 'Experiencia' : 'Proceso';
+    document.getElementById('how-label').className = (isEstetica ? 'text-dg-gold' : 'text-nurse-accent') + ' font-bold tracking-widest uppercase text-sm mb-2 block';
+    document.getElementById('how-title').textContent = 'Como Funciona?';
+    document.getElementById('how-desc').textContent = isEstetica ? 'Tu bienestar en 3 simples pasos.' : 'Tu salud en 3 simples pasos.';
+    document.getElementById('how-desc').className = (isEstetica ? 'text-gray-400' : 'text-gray-300') + ' max-w-2xl mx-auto';
+
+    const howSection = document.getElementById('como-funciona');
+    howSection.className = 'py-20 ' + (isEstetica ? 'bg-dg-dark' : 'bg-nurse-blue') + ' text-white';
+
+    document.getElementById('how-line').className = 'hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 ' + (isEstetica ? 'bg-dg-gold/30' : 'bg-nurse-accent/30');
+
+    const howIconClass = 'w-24 h-24 ' + (isEstetica ? 'bg-dg-gold' : 'bg-nurse-accent') + ' rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg relative z-10';
+    document.getElementById('how-icon-1').className = howIconClass + (isEstetica ? ' shadow-dg-gold/20' : ' shadow-nurse-accent/20');
+    document.getElementById('how-icon-2').className = howIconClass + (isEstetica ? ' shadow-dg-gold/20' : ' shadow-nurse-accent/20');
+    document.getElementById('how-icon-3').className = howIconClass + (isEstetica ? ' shadow-dg-gold/20' : ' shadow-nurse-accent/20');
+
+    document.getElementById('how-h3-1').textContent = '1. Elige tu Servicio';
+    document.getElementById('how-p-1').textContent = isEstetica ? 'Explora nuestro menu de tratamientos y selecciona el que mas se adapte a tus necesidades.' : 'Explora nuestros servicios de enfermeria y selecciona el que necesites.';
+    document.getElementById('how-p-1').className = isEstetica ? 'text-gray-400' : 'text-gray-300';
+
+    document.getElementById('how-h3-2').textContent = '2. Agenda por WhatsApp';
+    document.getElementById('how-p-2').textContent = isEstetica ? 'Al dar clic, te redirigimos directamente al chat de Dianne para confirmar fecha y hora.' : 'Te redirigimos al chat de Dianne para coordinar fecha, hora y lugar del servicio.';
+    document.getElementById('how-p-2').className = isEstetica ? 'text-gray-400' : 'text-gray-300';
+
+    document.getElementById('how-h3-3').textContent = isEstetica ? '3. Disfruta & Relajate' : '3. Atencion a Domicilio';
+    document.getElementById('how-p-3').textContent = isEstetica ? 'Ven a tu cita y dejate consentir. Tu bienestar es nuestra prioridad.' : 'Dianne llega a tu hogar con todo el material necesario para tu cuidado.';
+    document.getElementById('how-p-3').className = isEstetica ? 'text-gray-400' : 'text-gray-300';
+
+    // Update Products section
+    document.getElementById('products-label').textContent = isEstetica ? 'Cuidado en Casa' : 'Equipamiento Medico';
+    document.getElementById('products-label').className = (isEstetica ? 'text-dg-gold' : 'text-nurse-accent') + ' font-bold tracking-widest uppercase text-sm mb-2 block';
+    document.getElementById('products-title').innerHTML = isEstetica ? 'Productos <span class="text-dg-gold italic">Recomendados</span>' : 'Productos <span class="text-nurse-accent italic">Recomendados</span>';
+    document.getElementById('products-title').className = 'font-serif text-4xl md:text-5xl font-bold mb-4 ' + (isEstetica ? 'text-dg-dark' : 'text-nurse-blue');
+    document.getElementById('products-desc').textContent = isEstetica ? 'Manten los resultados de tu tratamiento con nuestros productos seleccionados.' : 'Equipos esenciales para el monitoreo de tu salud en casa.';
+    document.getElementById('productos').className = 'py-24 ' + (isEstetica ? 'bg-dg-cream' : 'bg-nurse-light');
+
+    // Update Tips section
+    document.getElementById('tips-label').textContent = isEstetica ? 'Consejos de Experta' : 'Consejos de Salud';
+    document.getElementById('tips-label').className = (isEstetica ? 'text-dg-gold' : 'text-nurse-accent') + ' font-bold tracking-widest uppercase text-sm mb-2 block';
+    document.getElementById('tips-title').innerHTML = 'Recomendaciones <span class="' + (isEstetica ? 'text-dg-gold' : 'text-nurse-accent') + ' italic">Dianne</span>';
+    document.getElementById('tips-title').className = 'font-serif text-4xl md:text-5xl font-bold mb-4 ' + (isEstetica ? 'text-dg-dark' : 'text-nurse-blue');
+    document.getElementById('tips').className = 'py-20 ' + (isEstetica ? 'bg-dg-rose/20' : 'bg-nurse-white');
+
+    // Update Testimonials section
+    document.getElementById('test-label').textContent = 'Testimonios';
+    document.getElementById('test-label').className = (isEstetica ? 'text-dg-gold' : 'text-nurse-accent') + ' font-bold tracking-widest uppercase text-sm mb-2 block';
+    document.getElementById('test-title').innerHTML = 'Lo que Dicen <span class="' + (isEstetica ? 'text-dg-gold' : 'text-nurse-accent') + ' italic">' + (isEstetica ? 'Nuestros Clientes' : 'Nuestros Pacientes') + '</span>';
+    document.getElementById('test-title').className = 'font-serif text-4xl md:text-5xl font-bold mb-4';
+    document.getElementById('testimonios').className = 'py-24 ' + (isEstetica ? 'bg-dg-dark' : 'bg-nurse-blue') + ' text-white relative overflow-hidden';
+
+    // Update Contact section
+    const contactIcon = document.getElementById('contact-icon');
+    const contactTitle = document.getElementById('contact-title');
+    const contactDesc = document.getElementById('contact-desc');
+    const ctaText = document.getElementById('cta-text');
+
+    if (isEstetica) {
+        contactIcon.className = 'w-20 h-20 bg-dg-gold rounded-full flex items-center justify-center mx-auto mb-6 text-4xl text-white shadow-xl shadow-dg-gold/30';
+        contactTitle.innerHTML = 'Lista para <span class="text-dg-gold italic">Brillar?</span>';
+        contactTitle.className = 'font-serif text-4xl md:text-6xl font-bold text-dg-dark mb-6';
+        contactDesc.textContent = 'Agenda tu cita ahora mismo. Estoy aqui para ayudarte a lucir y sentirte mejor. Escribeme por WhatsApp y conversemos sobre lo que necesitas!';
+        ctaText.textContent = 'Chatear con Dianne';
+        document.getElementById('contacto').className = 'py-24 bg-dg-cream relative';
+    } else {
+        contactIcon.className = 'w-20 h-20 bg-nurse-accent rounded-full flex items-center justify-center mx-auto mb-6 text-4xl text-white shadow-xl shadow-nurse-accent/30';
+        contactTitle.innerHTML = 'Necesitas <span class="text-nurse-accent italic">Atencion?</span>';
+        contactTitle.className = 'font-serif text-4xl md:text-6xl font-bold text-nurse-blue mb-6';
+        contactDesc.textContent = 'Agenda tu servicio de enfermeria ahora mismo. Estoy aqui para cuidar de tu salud en la comodidad de tu hogar. Escribeme por WhatsApp!';
+        ctaText.textContent = 'Solicitar Servicio';
+        document.getElementById('contacto').className = 'py-24 bg-nurse-light relative';
+    }
+
+    // Update footer
+    document.getElementById('footer-logo').className = 'w-8 h-8 rounded-full object-cover border ' + (isEstetica ? 'border-dg-gold' : 'border-nurse-accent');
+    document.getElementById('footer-title').textContent = isEstetica ? 'Dianne Garcia' : 'Enfermeria Dianne Garcia';
+    document.getElementById('footer-desc').textContent = isEstetica 
+        ? 'Centro de estetica y belleza dedicado a realzar tu belleza natural a traves de tratamientos profesionales y personalizados.'
+        : 'Servicios profesionales de enfermeria a domicilio. Atencion especializada, calida y personalizada para tu salud y bienestar.';
+    document.getElementById('footer-services-title').className = 'font-bold ' + (isEstetica ? 'text-dg-gold' : 'text-nurse-accent') + ' mb-4 uppercase text-sm tracking-wider';
+    document.getElementById('footer').className = (isEstetica ? 'bg-dg-dark' : 'bg-nurse-blue') + ' text-white py-12 border-t border-white/10';
+    document.getElementById('footer-copy').textContent = (isEstetica ? 'Estetica y Belleza' : 'Enfermeria') + ' Dianne Garcia. Todos los derechos reservados.';
+
+    // Re-render dynamic content
+    renderServices('all');
+    renderProducts();
+    renderTips();
+    renderTestimonials();
+
+    // Update footer services
+    const footerServicesList = document.getElementById('footer-services-list');
+    footerServicesList.innerHTML = '';
+    const footerServices = isEstetica 
+        ? ['Masajes', 'Faciales', 'PRP', 'Eliminaciones']
+        : ['Inyecciones', 'Cateterizacion', 'Cura de Heridas', 'Guardias'];
+    footerServices.forEach(svc => {
+        const li = document.createElement('li');
+        li.innerHTML = '<a href="#servicios" class="hover:text-white transition-colors">' + svc + '</a>';
+        footerServicesList.appendChild(li);
+    });
+
+    // Update WhatsApp links
+    const defaultMsg = encodeURIComponent(siteData.whatsappMessage + (isEstetica ? 'Me gustaria agendar una cita.' : 'Me gustaria solicitar un servicio de enfermeria.'));
+    const waBase = 'https://wa.me/' + siteData.whatsappNumber + '?text=' + defaultMsg;
+    document.getElementById('main-cta-btn').href = waBase;
+    document.getElementById('floating-whatsapp').href = waBase;
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============ RENDER SERVICES ============
+function renderServices(filter) {
+    const grid = document.getElementById('services-grid');
+    grid.innerHTML = '';
+    const data = currentMode === 'estetica' ? siteData.estetica : siteData.enfermeria;
+    const filtered = filter === 'all' ? data.services : data.services.filter(s => s.category === filter);
+
+    const isEstetica = currentMode === 'estetica';
+    const accentColor = isEstetica ? 'dg-gold' : 'nurse-accent';
+    const darkColor = isEstetica ? 'dg-dark' : 'nurse-blue';
+
+    filtered.forEach((service, index) => {
+        const card = document.createElement('div');
+        card.className = 'service-card bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group';
+        card.setAttribute('data-aos', 'fade-up');
+        card.setAttribute('data-aos-delay', (index % 3) * 100);
+
+        const waLink = 'https://wa.me/' + siteData.whatsappNumber + '?text=' + encodeURIComponent(siteData.whatsappMessage + service.title);
+
+        card.innerHTML = '<div class="img-zoom-container h-56 relative">' +
+            '<img src="' + service.image + '" alt="' + service.title + '" class="img-zoom w-full h-full object-cover">' +
+            '<div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700 shadow-sm">' +
+            '<i class="far fa-clock mr-1"></i> ' + service.duration + '</div>' +
+            '<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">' +
+            '<span class="bg-' + accentColor + ' text-white px-4 py-2 rounded-full text-sm font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform">' +
+            '<i class="fab fa-whatsapp mr-1"></i> Reservar</span></div></div>' +
+            '<div class="p-6">' +
+            '<div class="flex items-center gap-2 mb-3">' +
+            '<div class="w-8 h-8 bg-' + accentColor + '/10 rounded-full flex items-center justify-center text-' + accentColor + ' text-sm">' +
+            '<i class="fas ' + service.icon + '"></i></div>' +
+            '<span class="text-xs text-' + accentColor + ' font-bold uppercase tracking-wider">' + service.subtitle + '</span></div>' +
+            '<h3 class="font-serif text-xl font-bold text-' + darkColor + ' mb-2 group-hover:text-' + accentColor + ' transition-colors">' + service.title + '</h3>' +
+            '<p class="text-gray-500 text-sm mb-4 line-clamp-3">' + service.description + '</p>' +
+            '<div class="pt-4 border-t border-gray-100 text-center">' +
+            '<a href="' + waLink + '" target="_blank" class="inline-flex items-center gap-2 bg-' + accentColor + ' text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-' + darkColor + ' transition-colors">' +
+            '<i class="fab fa-whatsapp"></i> Consultar Precio</a></div></div>';
+
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => { if (!e.target.closest('a')) window.open(waLink, '_blank'); });
+        grid.appendChild(card);
+    });
+
+    // Update filters
+    const filtersContainer = document.getElementById('category-filters');
+    filtersContainer.innerHTML = '';
+    const categories = [...new Set(data.services.map(s => s.category))];
+    const categoryLabels = {
+        'masajes': 'Masajes', 'faciales': 'Faciales', 'prp': 'PRP', 'eliminaciones': 'Eliminaciones',
+        'procedimientos': 'Procedimientos', 'cuidados': 'Cuidados', 'monitoreo': 'Monitoreo', 'guardias': 'Guardias'
+    };
+
+    const allBtn = document.createElement('button');
+    allBtn.className = 'filter-btn active bg-' + accentColor + ' text-white px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all';
+    allBtn.textContent = 'Todos';
+    allBtn.onclick = () => { setActiveFilter(allBtn); renderServices('all'); };
+    filtersContainer.appendChild(allBtn);
+
+    categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider hover:border-' + accentColor + ' hover:text-' + accentColor + ' transition-all';
+        btn.textContent = categoryLabels[cat] || cat;
+        btn.onclick = () => { setActiveFilter(btn); renderServices(cat); };
+        filtersContainer.appendChild(btn);
+    });
+}
+
+function setActiveFilter(activeBtn) {
+    const isEstetica = currentMode === 'estetica';
+    const accentColor = isEstetica ? 'dg-gold' : 'nurse-accent';
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-' + accentColor, 'text-white');
+        btn.classList.add('bg-white', 'text-gray-600');
+    });
+    activeBtn.classList.remove('bg-white', 'text-gray-600');
+    activeBtn.classList.add('bg-' + accentColor, 'text-white');
+}
+
+// ============ RENDER PRODUCTS ============
+function renderProducts() {
+    const isEstetica = currentMode === 'estetica';
+    const data = isEstetica ? siteData.estetica : siteData.enfermeria;
+    const grid = document.getElementById('products-grid');
+    grid.innerHTML = '';
+
+    const accentColor = isEstetica ? 'dg-gold' : 'nurse-accent';
+    const darkColor = isEstetica ? 'dg-dark' : 'nurse-blue';
+    const bgColor = isEstetica ? 'dg-cream' : 'white';
+
+    data.products.forEach((prod, index) => {
+        const div = document.createElement('div');
+        div.className = 'bg-' + bgColor + ' rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 group';
+        div.setAttribute('data-aos', 'fade-up');
+        div.setAttribute('data-aos-delay', index * 100);
+
+        const prodWA = 'https://wa.me/' + siteData.whatsappNumber + '?text=' + encodeURIComponent('Hola Dianne, estoy interesad@ en el producto: ' + prod.name);
+
+        div.innerHTML = '<div class="relative mb-6 mx-auto w-40 h-40">' +
+            '<img src="' + prod.image + '" alt="' + prod.name + '" class="w-full h-full object-cover rounded-full border-4 border-white shadow-lg group-hover:scale-110 transition-transform duration-500"></div>' +
+            '<h3 class="font-serif text-lg font-bold text-' + darkColor + ' mb-2">' + prod.name + '</h3>' +
+            '<p class="text-gray-500 text-sm mb-4">' + prod.desc + '</p>' +
+            '<a href="' + prodWA + '" target="_blank" class="inline-block bg-white border-2 border-' + accentColor + ' text-' + accentColor + ' px-6 py-2 rounded-full text-sm font-bold hover:bg-' + accentColor + ' hover:text-white transition-all">' +
+            '<i class="fab fa-whatsapp mr-1"></i> Consultar</a>';
+        grid.appendChild(div);
+    });
+}
+
+// ============ RENDER TIPS ============
+function renderTips() {
+    const isEstetica = currentMode === 'estetica';
+    const data = isEstetica ? siteData.estetica : siteData.enfermeria;
+    const grid = document.getElementById('tips-grid');
+    grid.innerHTML = '';
+
+    const accentColor = isEstetica ? 'dg-gold' : 'nurse-accent';
+    const darkColor = isEstetica ? 'dg-dark' : 'nurse-blue';
+
+    data.tips.forEach((tip, index) => {
+        const div = document.createElement('div');
+        div.className = 'bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border-l-4 border-' + accentColor;
+        div.setAttribute('data-aos', 'fade-up');
+        div.setAttribute('data-aos-delay', index * 100);
+
+        div.innerHTML = '<div class="w-12 h-12 bg-' + accentColor + '/10 rounded-lg flex items-center justify-center text-' + accentColor + ' text-xl mb-4">' +
+            '<i class="fas ' + tip.icon + '"></i></div>' +
+            '<h3 class="font-bold text-' + darkColor + ' mb-2">' + tip.title + '</h3>' +
+            '<p class="text-sm text-gray-500">' + tip.desc + '</p>';
+        grid.appendChild(div);
+    });
+}
+
+// ============ RENDER TESTIMONIALS ============
+function renderTestimonials() {
+    const isEstetica = currentMode === 'estetica';
+    const grid = document.getElementById('testimonials-grid');
+    grid.innerHTML = '';
+
+    const accentColor = isEstetica ? 'dg-gold' : 'nurse-accent';
+
+    if (isEstetica) {
+        grid.innerHTML = '<div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-' + accentColor + '/50 transition-all" data-aos="fade-up" data-aos-delay="0">' +
+            '<div class="flex text-' + accentColor + ' mb-4 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>' +
+            '<p class="text-gray-300 italic mb-6">"La limpieza facial profunda de Dianne cambio mi piel completamente. El ambiente es tan relajante y ella es una profesional increible. Totalmente recomendada!"</p>' +
+            '<div class="flex items-center gap-3"><div class="w-10 h-10 bg-' + accentColor + ' rounded-full flex items-center justify-center text-white font-bold">M</div>' +
+            '<div><div class="font-bold">Maria P.</div><div class="text-xs text-gray-400">Limpieza Facial</div></div></div></div>' +
+            '<div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-' + accentColor + '/50 transition-all" data-aos="fade-up" data-aos-delay="100">' +
+            '<div class="flex text-' + accentColor + ' mb-4 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>' +
+            '<p class="text-gray-300 italic mb-6">"Los masajes relajantes son el mejor regalo que me doy a mi misma. Dianne tiene unas manos magicas. Salgo renovada cada vez que voy."</p>' +
+            '<div class="flex items-center gap-3"><div class="w-10 h-10 bg-' + accentColor + ' rounded-full flex items-center justify-center text-white font-bold">C</div>' +
+            '<div><div class="font-bold">Carolina R.</div><div class="text-xs text-gray-400">Masaje Relajante</div></div></div></div>' +
+            '<div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-' + accentColor + '/50 transition-all" data-aos="fade-up" data-aos-delay="200">' +
+            '<div class="flex text-' + accentColor + ' mb-4 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>' +
+            '<p class="text-gray-300 italic mb-6">"Despues de 3 sesiones de masaje reductor, note una diferencia increible en mi abdomen. Ademas, el trato es muy personalizado y calido."</p>' +
+            '<div class="flex items-center gap-3"><div class="w-10 h-10 bg-' + accentColor + ' rounded-full flex items-center justify-center text-white font-bold">L</div>' +
+            '<div><div class="font-bold">Laura G.</div><div class="text-xs text-gray-400">Masaje Reductor</div></div></div></div>';
+    } else {
+        grid.innerHTML = '<div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-' + accentColor + '/50 transition-all" data-aos="fade-up" data-aos-delay="0">' +
+            '<div class="flex text-' + accentColor + ' mb-4 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>' +
+            '<p class="text-gray-300 italic mb-6">"Dianne es una enfermera excelente. Vino a mi casa para las inyecciones de mi tratamiento y siempre fue muy profesional y carinosa. La recomiendo al 100%!"</p>' +
+            '<div class="flex items-center gap-3"><div class="w-10 h-10 bg-' + accentColor + ' rounded-full flex items-center justify-center text-white font-bold">J</div>' +
+            '<div><div class="font-bold">Jose R.</div><div class="text-xs text-gray-400">Inyecciones</div></div></div></div>' +
+            '<div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-' + accentColor + '/50 transition-all" data-aos="fade-up" data-aos-delay="100">' +
+            '<div class="flex text-' + accentColor + ' mb-4 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>' +
+            '<p class="text-gray-300 italic mb-6">"Mi madre necesitaba cuidados las 24 horas y Dianne fue un angel. Su paciencia, profesionalismo y dedicacion hicieron toda la diferencia en la recuperacion."</p>' +
+            '<div class="flex items-center gap-3"><div class="w-10 h-10 bg-' + accentColor + ' rounded-full flex items-center justify-center text-white font-bold">A</div>' +
+            '<div><div class="font-bold">Ana M.</div><div class="text-xs text-gray-400">Cuidado 24h</div></div></div></div>' +
+            '<div class="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-' + accentColor + '/50 transition-all" data-aos="fade-up" data-aos-delay="200">' +
+            '<div class="flex text-' + accentColor + ' mb-4 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>' +
+            '<p class="text-gray-300 italic mb-6">"El control de mi presion arterial durante 7 dias fue impecable. Dianne es muy puntual, organizada y siempre me dio recomendaciones utiles para mi salud."</p>' +
+            '<div class="flex items-center gap-3"><div class="w-10 h-10 bg-' + accentColor + ' rounded-full flex items-center justify-center text-white font-bold">R</div>' +
+            '<div><div class="font-bold">Roberto C.</div><div class="text-xs text-gray-400">Control de Tension</div></div></div></div>';
+    }
+}
+
+// ============ NAVBAR SCROLL ============
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        navbar.classList.add(currentMode === 'estetica' ? 'nav-blur' : 'nav-blur-nurse', 'shadow-md', 'py-2');
+        navbar.classList.remove('py-4');
+    } else {
+        navbar.classList.remove('nav-blur', 'nav-blur-nurse', 'shadow-md', 'py-2');
+        navbar.classList.add('py-4');
+    }
+});
+
+// ============ MOBILE MENU ============
+const mobileBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+// ============ SMOOTH SCROLL ============
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// ============ INITIAL RENDER ============
+renderServices('all');
+renderProducts();
+renderTips();
+renderTestimonials();
+
+// Initial footer services
+const footerServicesList = document.getElementById('footer-services-list');
+if (footerServicesList) {
+    footerServicesList.innerHTML = '';
+    ['Masajes', 'Faciales', 'PRP', 'Eliminaciones'].forEach(svc => {
+        const li = document.createElement('li');
+        li.innerHTML = '<a href="#servicios" class="hover:text-white transition-colors">' + svc + '</a>';
+        footerServicesList.appendChild(li);
+    });
+}
+
+const defaultMsg = encodeURIComponent(siteData.whatsappMessage + 'Me gustaria agendar una cita.');
+const waBase = 'https://wa.me/' + siteData.whatsappNumber + '?text=' + defaultMsg;
+document.getElementById('main-cta-btn').href = waBase;
+document.getElementById('floating-whatsapp').href = waBase;
+</script>
+</body>
+</html>
